@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -e
 echo 'THETRANSITCLOCK DOCKER: Set Config.'
 
 find /usr/local/transitclock/config/ -type f -exec sed -i s#"POSTGRES_PORT_5432_TCP_ADDR"#"$POSTGRES_PORT_5432_TCP_ADDR"#g {} \;

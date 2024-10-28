@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # this script requires: zip, unzip, sort, awk, grep
 # everything should come installed except maybe zip

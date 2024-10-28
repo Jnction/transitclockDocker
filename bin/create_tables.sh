@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -e
 echo 'THETRANSITCLOCK DOCKER: Create Tables'
 
 java -cp /usr/local/transitclock/Core.jar org.transitclock.applications.SchemaGenerator -p org.transitclock.db.structs -o /usr/local/transitclock/db

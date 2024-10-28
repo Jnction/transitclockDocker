@@ -1,19 +1,24 @@
+#!/bin/sh -e
 export PGPASSWORD=transitclock
 
-docker stop transitclock-db
-docker stop transitclock-server-instance
+for container in transitclock-db transitclock-server-instance; do
+    if docker container inspect $container >/dev/null 2>&1; then        
+        docker stop $container
+        docker rm $container
+    fi
+done
 
-docker rm transitclock-db
-docker rm transitclock-server-instance
-
-docker rmi transitclock-server
+if docker image inspect transitclock-server >/dev/null 2>&1; then 
+    docker rmi transitclock-server
+fi
 
 docker build --no-cache -t transitclock-server \
+--progress tty \
 --build-arg TRANSITCLOCK_PROPERTIES="config/transitclock.properties" \
---build-arg AGENCYID="1" \
---build-arg AGENCYNAME="CAPMETRO" \
---build-arg GTFS_URL="https://data.texas.gov/download/r4v4-vz24/application/zip" \
---build-arg GTFSRTVEHICLEPOSITIONS="https://data.texas.gov/download/eiei-9rpf/application%2Foctet-stream" .
+--build-arg AGENCYID="WDBC" \
+--build-arg AGENCYNAME="morebus" \
+--build-arg GTFS_URL="http://host.docker.internal/combined_gtfs.zip" \
+--build-arg GTFSRTVEHICLEPOSITIONS="https://internal-proxy.servology.co.uk/dft/bus-data/gtfsrt/" .
 
 docker run --name transitclock-db -p 5432:5432 -e POSTGRES_PASSWORD=$PGPASSWORD -d postgres:9.6.3
 

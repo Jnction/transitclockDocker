@@ -1,4 +1,4 @@
-FROM maven:3.6-jdk-8
+FROM maven:latest
 MAINTAINER Nathan Walker <nathan@rylath.net>, Sean Óg Crudden <og.crudden@gmail.com>
 
 ARG AGENCYID="1"
@@ -40,11 +40,11 @@ EXPOSE 8080
 
 # Install json parser so we can read API key for CreateAPIKey output
 
-RUN wget http://stedolan.github.io/jq/download/linux64/jq
+#RUN wget http://stedolan.github.io/jq/download/linux64/jq
 
-RUN chmod +x ./jq
+#RUN chmod +x ./jq
 
-RUN cp jq /usr/bin/
+#RUN cp jq /usr/bin/
 
 WORKDIR /
 RUN mkdir /usr/local/transitclock
@@ -58,11 +58,11 @@ RUN mkdir /usr/local/transitclock/test/config
 
 WORKDIR /usr/local/transitclock
 
-RUN  curl -s https://api.github.com/repos/TheTransitClock/transitime/releases/latest | jq -r ".assets[].browser_download_url" | grep 'Core.jar\|api.war\|web.war' | xargs -L1 wget
+#RUN  curl -s https://api.github.com/repos/TheTransitClock/transitime/releases/latest | jq -r ".assets[].browser_download_url" | grep 'Core.jar\|api.war\|web.war' | xargs -L1 wget
 
-#ADD transitime/transitclockWebapp/target/web.war /usr/local/transitclock/
-#ADD transitime/transitclockApi/target/api.war /usr/local/transitclock/
-#ADD transitime/transitclock/target/Core.jar /usr/local/transitclock/
+ADD transitime/transitclockWebapp/target/web.war /usr/local/transitclock/
+ADD transitime/transitclockApi/target/api.war /usr/local/transitclock/
+ADD transitime/transitclock/target/Core.jar /usr/local/transitclock/
 
 # Deploy API which talks to core using RMI calls.
 RUN mv api.war  /usr/local/tomcat/webapps

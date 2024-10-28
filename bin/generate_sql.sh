@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -e
 
 echo 'THETRANSITCLOCK DOCKER: Generate SQL to create tables.'
 

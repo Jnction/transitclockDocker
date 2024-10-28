@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -e
 echo 'THETRANSITCLOCK DOCKER: Start TheTransitClock.'
 # This is to substitute into config file the env values
 find /usr/local/transitclock/config/ -type f -exec sed -i s#"POSTGRES_PORT_5432_TCP_ADDR"#"$POSTGRES_PORT_5432_TCP_ADDR"#g {} \;
@@ -21,6 +21,6 @@ echo JAVA_OPTS $JAVA_OPTS
 
 /usr/local/tomcat/bin/startup.sh
 
-java -Xss12m -Xms16g -Xmx32g -Duser.timezone=EST -Dtransitclock.configFiles=/usr/local/transitclock/config/transitclock.properties -Dtransitclock.core.agencyId=$AGENCYID -Dtransitclock.logging.dir=/usr/local/transitclock/logs/ -jar /usr/local/transitclock/Core.jar > /usr/local/transitclock/logs/output.txt &
+java -Xss12m -Xms16g -Xmx32g -Duser.timezone=GMT -Dtransitclock.configFiles=/usr/local/transitclock/config/transitclock.properties -Dtransitclock.core.agencyId=$AGENCYID -Dtransitclock.logging.dir=/usr/local/transitclock/logs/ -jar /usr/local/transitclock/Core.jar > /usr/local/transitclock/logs/output.txt &
 
 tail -f /dev/null

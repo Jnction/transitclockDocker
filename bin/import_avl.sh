@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash -e
 echo 'THETRANSITCLOCK DOCKER: Import test AVL.'
 
 psql \
